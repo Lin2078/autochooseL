@@ -75,7 +75,7 @@ discover_advanced_indices <- function(data, target_name, max_order = 3, top_k = 
       # 计算与发病率的相关性
       score <- stats::cor(candidate, data[[target_name]])
       
-      if (!is.na(score) && abs(score) > 0.4) {
+      if (!is.na(score) && abs(score) > 0.2) {
         return(data.frame(
           Formula = formula_str,
           Abs_Correlation = round(abs(score), 4),
