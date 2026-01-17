@@ -134,7 +134,7 @@ discover_advanced_indices <- function(data, target_name, max_order = 3, top_k = 
   return(final_df[order(-final_df$Abs_Correlation), ])
 }
 
-# --- 引擎 3：自适应绘图系统 ---
+# --- 引擎 3：自适应绘图系统 (彻底解决 Strength 报错版本) ---
 #' @export
 plot_L2078 <- function(res_obj) {
   if (!requireNamespace("ggplot2", quietly = TRUE)) stop("请安装 ggplot2 包")
@@ -148,9 +148,9 @@ plot_L2078 <- function(res_obj) {
   # 转换确保数据框属性
   res_df <- as.data.frame(res_obj)
 
-  # 判定逻辑：优先检查 Abs_Correlation 绘图模式
+  # 判定逻辑：优先检查 Abs_Correlation 绘图模式（公式挖掘）
   if ("Abs_Correlation" %in% colnames(res_df)) {
-    # 绘制公式排行榜
+    # 强制不使用任何 geom_point，确保不触发 Strength 检查
     p <- ggplot(utils::head(res_df, 12), 
                 aes(x = stats::reorder(Formula, Abs_Correlation), 
                     y = Abs_Correlation, 
@@ -165,7 +165,7 @@ plot_L2078 <- function(res_obj) {
     return(p)
       
   } else if ("Strength" %in% colnames(res_df)) {
-    # 绘制指标共现散点图
+    # 仅在存在 Strength 列时才绘制共现散点图
     p <- ggplot(res_df, aes(x = Prevalence, y = Strength, color = as.factor(Order_L))) +
       geom_point(aes(size = Strength), alpha = 0.6) +
       geom_text(aes(label = Composition), vjust = -1, size = 3, check_overlap = TRUE) +
@@ -174,6 +174,6 @@ plot_L2078 <- function(res_obj) {
       theme_minimal()
     return(p)
   } else {
-    message("![L2078] 数据格式无法自动识别，请检查结果对象。")
+    message("![L2078] 数据格式无法自动识别（未找到 Abs_Correlation 或 Strength 列）。")
   }
 }
