@@ -10,7 +10,7 @@
 
 ## 🚀 核心特性
 
-* **高阶探测 (High-Order Discovery)**：支持多达 5 个变量的复杂交互建模。
+* **高阶探测 (High-Order Discovery)**：支持 2～5 个变量的复杂交互建模。
 * **非线性算子库**：内置 12 种模拟生物逻辑的数学模型：
 * **Sigmoid Response**: 探测疾病爆发的阈值开关效应。
 * **Euclidean Distance**: 衡量生理指标对健康平衡点的偏离。
