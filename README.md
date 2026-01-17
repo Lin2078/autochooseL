@@ -1,4 +1,4 @@
-# autochooseL (v3.1.0) 🧪
+# autochooseL (v2.2.0) 🧪
 
 **L2078 Ultra: 高阶非线性生物标志物公式发现引擎**
 
