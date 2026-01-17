@@ -1,30 +1,89 @@
-# autochooseL 🚀 (Project ID: L2078)
+# autochooseL (v3.1.0) 🧪
 
-Developed by **Lin2078**, `autochooseL` is a high-performance R package designed for automated discovery and selection of complex label relationships within multi-dimensional datasets.
+**L2078 Ultra: 高阶非线性生物标志物公式发现引擎**
 
+## 🌟 核心愿景
 
+在生物医学研究中，单指标往往难以解释复杂的疾病机制。`autochooseL` 旨在打破传统线性模型的限制，通过 **L2078 引擎** 自动化扫描成千上万种高阶非线性数学组合（），从中锁定最具临床预测力的“超级公式”。
 
-## 🌟 Key Features
-- **Auto-L Engine**: Systematically scans through relationship complexities (L) from $L=2$ to $L=5$.
-- **High Performance**: Integrated with `future.apply` for multi-core parallel processing to handle combinatorial explosions.
-- **L2078 Authentication**: Every result object is embedded with the **L2078** signature to ensure data traceability and originality.
-- **Advanced Visualization**: Built-in support for relationship landscape plotting using `ggplot2`.
+---
 
-## 🛠 Installation
-You can install the development version of `autochooseL` from [GitHub](https://github.com/Lin2078/autochooseL) with:
+## 🚀 核心特性
 
-```R
-# install.packages("devtools")
-devtools::install_github("Lin2078/autochooseL")
+* **高阶探测 (High-Order Discovery)**：支持多达 5 个变量的复杂交互建模。
+* **非线性算子库**：内置 12 种模拟生物逻辑的数学模型：
+* **Sigmoid Response**: 探测疾病爆发的阈值开关效应。
+* **Euclidean Distance**: 衡量生理指标对健康平衡点的偏离。
+* **Harmonic/Geometric Mean**: 捕捉系统中的“短板效应”与协同平衡。
 
+---
+
+## 📦 安装指南
+
+确保你已经安装了 `devtools`，然后在 R 中运行：
+
+```r
+# 安装最新稳定版 (v2.2.0)
+devtools::install_github("Lin2078/autochooseL", force = TRUE)
+
+```
+
+---
+
+## 🛠️ 快速上手
+
+### 1. 自动化公式挖掘
+
+只需输入数据集和你的目标变量（结局），引擎将自动开始“炼金”：
+
+```r
 library(autochooseL)
 
-# 1. Run the auto-selection algorithm on your CSV data
-# Enable parallel mode for faster processing on large datasets
-results <- auto_choose_L("your_dataset.csv", max_L = 4, parallel = TRUE)
+# 发现高阶公式排行榜
+# target_name 可以是连续变量，也可以是 0/1 结局
+results <- discover_advanced_indices(
+  data = my_clinical_data, 
+  target_name = "Outcome_A", 
+  max_order = 3
+)
 
-# 2. View the report with L2078 signature
-print(results)
+# 查看最具预测力的前 10 个公式
+print(head(results, 10))
 
-# 3. Plot the relationship intensity map
+```
+
+### 2. 科研绘图
+
+一键生成符合 SCI 发表要求的公式排行榜图表：
+
+```r
 plot_L2078(results)
+
+```
+
+---
+
+## 📊 公式模型对照表
+
+| 模型名称 | 数学逻辑 | 生物学解释示例 |
+| --- | --- | --- |
+| `Sigmoid_Response` |  | 模拟受体饱和或疾病发作的触发阈值 |
+| `Euclidean_Dist` |  | 评估多项指标偏离稳态的总空间位移 |
+| `Harmonic` |  | 关键辅酶或微量元素的“短板”限制效应 |
+| `CV_Inconsistency` |  | 评估生物系统运行的稳定性/节律紊乱 |
+
+---
+
+## 📖 引用 (Citation)
+
+如果你在 SCI 论文中使用了本工具，请按以下方式引用：
+
+> *Lin, 2078. autochooseL: An R package for automated nonlinear formula discovery in complex biological systems. v2.2.0. GitHub Repository.*
+
+---
+
+## 🤝 贡献与反馈
+
+如果你发现了更有趣的数学模型，或者在使用中遇到问题，欢迎提交 Issue。
+**Author:** Lin2078
+**Algorithm:** L2078 Ultra Engine
