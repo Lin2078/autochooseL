@@ -1,66 +1,52 @@
-#' 发现复合指标关系 (L2078 引擎)
-#' @param data 原始数据框 (数值型指标)
-#' @param max_L 最大组合阶数
-#' @param top_n 每一阶保留的最强关联数
+#' L2078 高等数学指标挖掘引擎
+#' @param data 原始数据框
+#' @param target_name 你的目标观察指标 (例如：Pressure)
 #' @export
-auto_choose_L <- function(data, max_L = 4, top_n = 10) {
+discover_advanced_indices <- function(data, target_name) {
   auth_id <- "L2078"
-  start_time <- Sys.time()
+  vars <- setdiff(colnames(data), target_name)
   
-  # 自动提取数值列
-  numeric_data <- data[, sapply(data, is.numeric)]
+  # 预设数学变换算子
+  ops <- list(
+    ratio = function(a, b) a / b,
+    product = function(a, b) a * b,
+    bmi_style = function(a, b) a / (b^2),
+    log_prod = function(a, b) log(abs(a * b) + 1)
+  )
   
-  # 核心预处理：二值化 (找出各指标的高位状态，类似于“超重”状态)
-  # 使用 75% 分位数作为触发阈值
-  binary_data <- as.data.frame(lapply(numeric_data, function(x) {
-    as.numeric(x > quantile(x, 0.75, na.rm = TRUE))
-  }))
+  results <- list()
   
-  all_tags <- colnames(binary_data)
-  final_results <- list()
-
-  for (L in 2:max_L) {
-    message(sprintf("[%s] 正在搜寻 %d 阶复合指标潜力股...", auth_id, L))
+  # 遍历指标两两组合，尝试高等数学变换
+  combos <- utils::combn(vars, 2, simplify = FALSE)
+  
+  for (pair in combos) {
+    a_name <- pair[1]
+    b_name <- pair[2]
+    a <- data[[a_name]]
+    b <- data[[b_name]]
     
-    combos <- utils::combn(all_tags, L, simplify = FALSE)
-    
-    step_res <- lapply(combos, function(tags) {
-      sub_mat <- as.matrix(binary_data[, tags])
-      support <- sum(rowSums(sub_mat) == L) / nrow(binary_data)
+    for (op_name in names(ops)) {
+      # 生成候选新指标
+      candidate_index <- ops[[op_name]](a, b)
       
-      if (support < 0.02) return(NULL) # 频率太低的不具备指标化价值
-
-      expected <- prod(colMeans(sub_mat))
-      lift <- if(expected > 0) support / expected else 0
+      # 验证该新指标与目标指标的相关性 (使用绝对值)
+      correlation <- abs(cor(candidate_index, data[[target_name]], use = "complete.obs"))
       
-      if (lift > 1.2) {
-        return(data.frame(
-          Composition = paste(tags, collapse = " * "),
-          Order_L = L,
-          Strength = round(lift, 4),
-          Prevalence = round(support, 4),
+      if (!is.na(correlation) && correlation > 0.4) {
+        results[[length(results) + 1]] <- data.frame(
+          Formula = paste0(op_name, "(", a_name, ", ", b_name, ")"),
+          Math_Logic = switch(op_name,
+                             ratio = paste0(a_name, "/", b_name),
+                             product = paste0(a_name, "*", b_name),
+                             bmi_style = paste0(a_name, "/", b_name, "^2"),
+                             log_prod = paste0("log(", a_name, "*", b_name, ")")),
+          Score = round(correlation, 4),
           Auth = auth_id
-        ))
+        )
       }
-      return(NULL)
-    })
-    
-    level_df <- do.call(rbind, step_res)
-    if (!is.null(level_df)) {
-      # 每一阶只保留最强的 Top N，防止组合爆炸
-      level_df <- level_df[order(-level_df$Strength), ]
-      final_results[[L]] <- head(level_df, top_n)
     }
   }
-
-  res <- do.call(rbind, final_results)
   
-  if (is.null(res)) {
-    res <- data.frame(Composition=character(), Order_L=numeric(), Strength=numeric(), Auth=character())
-    message("![L2078] 未发现具有显著关联的指标组合。")
-  }
-  
-  attr(res, "runtime") <- Sys.time() - start_time
-  class(res) <- c("L2078_index_finder", class(res))
-  return(res)
+  res_df <- do.call(rbind, results)
+  return(res_df[order(-res_df$Score), ])
 }
