@@ -1,55 +1,44 @@
-#' 自动筛选复杂关系 (auto-choose L)
-#' @description 带有 Lin2078 标识的高性能迭代挖掘引擎
+#' 发现复合指标关系 (L2078 引擎)
+#' @param data 原始数据框 (数值型指标)
+#' @param max_L 最大组合阶数
+#' @param top_n 每一阶保留的最强关联数
 #' @export
-auto_choose_L <- function(path, max_L = 5, parallel = FALSE) {
-  
+auto_choose_L <- function(data, max_L = 4, top_n = 10) {
   auth_id <- "L2078"
   start_time <- Sys.time()
   
-  # 1. 录入与预处理
-  if(!file.exists(path)) stop("Error: 文件路径不存在")
-  raw_data <- read.csv(path)
+  # 自动提取数值列
+  numeric_data <- data[, sapply(data, is.numeric)]
   
-  # 自动提取数值列 (标签通常为0/1)
-  tag_data <- raw_data[, sapply(raw_data, is.numeric), drop = FALSE]
-  all_labels <- colnames(tag_data)
+  # 核心预处理：二值化 (找出各指标的高位状态，类似于“超重”状态)
+  # 使用 75% 分位数作为触发阈值
+  binary_data <- as.data.frame(lapply(numeric_data, function(x) {
+    as.numeric(x > quantile(x, 0.75, na.rm = TRUE))
+  }))
   
-  message(sprintf("[%s] 引擎启动。识别到标签: %d 个", auth_id, length(all_labels)))
-
-  # 2. 并行配置
-  if(parallel) {
-    if(!requireNamespace("future.apply", quietly = TRUE)) stop("请先安装 future.apply 包")
-    future::plan(future::multisession)
-  }
-
+  all_tags <- colnames(binary_data)
   final_results <- list()
 
-  # 3. L阶迭代循环
   for (L in 2:max_L) {
-    message(paste(">> 正在分析 L =", L, "阶关系..."))
+    message(sprintf("[%s] 正在搜寻 %d 阶复合指标潜力股...", auth_id, L))
     
-    combos <- utils::combn(all_labels, L, simplify = FALSE)
-    calc_func <- if(parallel) future.apply::future_lapply else lapply
+    combos <- utils::combn(all_tags, L, simplify = FALSE)
     
-    step_res <- calc_func(combos, function(tags) {
-      sub_mat <- as.matrix(tag_data[, tags])
+    step_res <- lapply(combos, function(tags) {
+      sub_mat <- as.matrix(binary_data[, tags])
+      support <- sum(rowSums(sub_mat) == L) / nrow(binary_data)
       
-      # 计算 Support (联合频率)
-      hit_vec <- matrixStats::rowAlls(sub_mat == 1, na.rm = TRUE)
-      support <- sum(hit_vec) / nrow(tag_data)
-      
-      if (support < 0.01) return(NULL) 
+      if (support < 0.02) return(NULL) # 频率太低的不具备指标化价值
 
-      # 计算 Lift (关联强度)
-      expected <- prod(colMeans(sub_mat, na.rm = TRUE))
+      expected <- prod(colMeans(sub_mat))
       lift <- if(expected > 0) support / expected else 0
       
       if (lift > 1.2) {
         return(data.frame(
-          Relationship = paste(tags, collapse = " & "),
+          Composition = paste(tags, collapse = " * "),
           Order_L = L,
-          Lift = round(lift, 4),
-          Support = round(support, 4),
+          Strength = round(lift, 4),
+          Prevalence = round(support, 4),
           Auth = auth_id
         ))
       }
@@ -57,15 +46,21 @@ auto_choose_L <- function(path, max_L = 5, parallel = FALSE) {
     })
     
     level_df <- do.call(rbind, step_res)
-    if (is.null(level_df) || nrow(level_df) == 0) break
-    final_results[[L]] <- level_df
+    if (!is.null(level_df)) {
+      # 每一阶只保留最强的 Top N，防止组合爆炸
+      level_df <- level_df[order(-level_df$Strength), ]
+      final_results[[L]] <- head(level_df, top_n)
+    }
   }
 
-  # 4. 结果封装
-  result_obj <- do.call(rbind, final_results)
-  attr(result_obj, "signature") <- auth_id
-  attr(result_obj, "runtime") <- Sys.time() - start_time
-  class(result_obj) <- c("auto_L_res", class(result_obj))
+  res <- do.call(rbind, final_results)
   
-  return(result_obj)
+  if (is.null(res)) {
+    res <- data.frame(Composition=character(), Order_L=numeric(), Strength=numeric(), Auth=character())
+    message("![L2078] 未发现具有显著关联的指标组合。")
+  }
+  
+  attr(res, "runtime") <- Sys.time() - start_time
+  class(res) <- c("L2078_index_finder", class(res))
+  return(res)
 }
