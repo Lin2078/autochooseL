@@ -1,0 +1,12 @@
+# 导出用户直接使用的函数
+export(auto_choose_L)
+export(plot_L2078)
+
+# 注册S3方法（用于美化打印结果）
+S3method(print, auto_L_res)
+
+# 导入必要的外部依赖（确保运算不报错）
+import(dplyr)
+import(ggplot2)
+importFrom(future.apply, future_lapply)
+importFrom(matrixStats, rowAlls)
