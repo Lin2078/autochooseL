@@ -1,12 +1,9 @@
-# 导出核心函数
+# 导出核心入口函数
 export(auto_choose_L)
 export(discover_advanced_indices)
 export(plot_L2078)
 
-# 导入整个核心包 (这种方式最不容易报错)
+# 导入外部包的完整命名空间（防止 scale, sd 等底层冲突）
 import(ggplot2)
 import(stats)
 import(utils)
-
-# 如果你坚持要逐个导入，请改用以下写法 (但推荐上面的写法):
-# importFrom(stats, cor, complete.cases, quantile, reorder, sd, scale)
