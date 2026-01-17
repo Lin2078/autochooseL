@@ -3,10 +3,12 @@
 export(auto_choose_L)
 export(discover_advanced_indices)
 export(plot_L2078)
+
 import(ggplot2)
 importFrom(stats,cor)
 importFrom(stats,complete.cases)
 importFrom(stats,quantile)
+importFrom(stats,reorder)
 importFrom(utils,combn)
 importFrom(utils,head)
 importFrom(utils,read.csv)
