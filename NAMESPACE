@@ -1,9 +1,7 @@
-# 导出 L2078 入口函数
 export(auto_choose_L)
 export(discover_advanced_indices)
 export(plot_L2078)
 
-# 导入整个核心命名空间
 import(ggplot2)
 import(stats)
 import(utils)
