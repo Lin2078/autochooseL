@@ -9,7 +9,7 @@ auto_choose_L <- function(data, max_L = 3, top_n = 5) {
   if(is.character(data)) data <- utils::read.csv(data)
   numeric_data <- data[, sapply(data, is.numeric)]
   
-  # Binarization (捕捉高位异常)
+  # Binarization (Capturing extreme high-risk states)
   binary_data <- as.data.frame(lapply(numeric_data, function(x) {
     as.numeric(x > stats::quantile(x, 0.75, na.rm = TRUE))
   }))
@@ -93,21 +93,20 @@ discover_advanced_indices <- function(data, target_name, max_order = 3, top_k = 
   return(final_df[order(-final_df$Abs_Correlation), ])
 }
 
-# --- Engine 3: Adaptive Visualization (Fixed logic to prevent Strength error) ---
+# --- Engine 3: Adaptive Visualization (Fixing Logic & Font Issues) ---
 #' @export
 plot_L2078 <- function(res_obj) {
   if (!requireNamespace("ggplot2", quietly = TRUE)) stop("Please install ggplot2")
   library(ggplot2)
   if (is.null(res_obj) || nrow(res_obj) == 0) {
-    message("No results to plot.")
+    message("No results found to plot.")
     return(NULL)
   }
   
   res_df <- as.data.frame(res_obj)
 
-  # CRITICAL FIX: Explicit branching based on column presence
+  # Logic Branch A: Formula Mining Results (Using Abs_Correlation)
   if ("Abs_Correlation" %in% colnames(res_df)) {
-    # Formula Discovery Mode: Uses geom_bar (NO Strength column needed)
     p <- ggplot(utils::head(res_df, 12), 
                 aes(x = stats::reorder(Formula, Abs_Correlation), 
                     y = Abs_Correlation, 
@@ -115,7 +114,7 @@ plot_L2078 <- function(res_obj) {
       geom_bar(stat = "identity", alpha = 0.8) +
       coord_flip() +
       scale_fill_brewer(palette = "Set1") +
-      labs(title = "L2078: Formula Risk Ranking",
+      labs(title = "L2078: Composite Index Risk Ranking",
            subtitle = "Correlation between Formula and Target Variable",
            x = "Mathematical Formula", 
            y = "Absolute Correlation Score", 
@@ -123,16 +122,19 @@ plot_L2078 <- function(res_obj) {
       theme_minimal()
     return(p)
       
-  } else if ("Strength" %in% colnames(res_df)) {
-    # Co-occurrence Mode: Uses geom_point (Uses Strength/Prevalence)
+  } 
+  # Logic Branch B: Indicator Co-occurrence Results (Using Strength/Prevalence)
+  else if ("Strength" %in% colnames(res_df)) {
     p <- ggplot(res_df, aes(x = Prevalence, y = Strength, color = as.factor(Order_L))) +
       geom_point(aes(size = Strength), alpha = 0.7) +
       geom_text(aes(label = Composition), vjust = -1, size = 3, check_overlap = TRUE) +
       labs(title = "L2078: Synergy Strength Analysis",
-           x = "Prevalence", y = "Strength (Lift)", color = "Order") +
+           x = "Prevalence (Occurrence)", 
+           y = "Strength (Lift)", 
+           color = "Order") +
       theme_minimal()
     return(p)
   } else {
-    message("Unrecognized data format for L2078 plotting.")
+    message("Error: Data structure not recognized by L2078 plotting system.")
   }
 }
