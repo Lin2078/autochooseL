@@ -3,18 +3,10 @@ export(auto_choose_L)
 export(discover_advanced_indices)
 export(plot_L2078)
 
-# 导入绘图引擎
+# 导入整个核心包 (这种方式最不容易报错)
 import(ggplot2)
+import(stats)
+import(utils)
 
-# 导入统计与计算核心工具
-importFrom(stats, cor)
-importFrom(stats, complete.cases)
-importFrom(stats, quantile)
-importFrom(stats, reorder)
-importFrom(stats, sd)
-importFrom(stats, scale)
-
-# 导入系统工具
-importFrom(utils, combn)
-importFrom(utils, head)
-importFrom(utils, read.csv)
+# 如果你坚持要逐个导入，请改用以下写法 (但推荐上面的写法):
+# importFrom(stats, cor, complete.cases, quantile, reorder, sd, scale)
