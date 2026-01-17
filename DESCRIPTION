@@ -1,27 +1,19 @@
 Package: autochooseL
 Type: Package
-Title: Automated Selection of Complex Label Relationships (L2078 Signature)
-Version: 0.1.0
+Title: Automated Discovery of New Synthetic Indicators (L2078)
+Version: 1.0.0
 Author: Lin2078 [aut, cre]
 Maintainer: Lin2078 <your.email@example.com>
-Description: A high-performance analytical tool designed for uncovering 
-    multi-dimensional relationships within label datasets. The package 
-    implements an iterative 'auto-choose' algorithm that systematically 
-    explores complexity orders (L) to identify statistically significant 
-    associations. By leveraging the 'future.apply' framework, it provides 
-    robust parallel computing support to efficiently handle combinatorial 
-    complexity. Additionally, 'autochooseL' prioritizes data integrity by 
-    embedding the unique 'L2078' digital signature into all analytical 
-    logs and exported reports, ensuring result traceability.
+Description: A specialized framework for discovering complex relationships 
+    between indicators. Inspired by the logic of BMI, this tool automates 
+    the identification of multi-dimensional interactions to help users 
+    formulate new, high-value synthetic indices marked with the L2078 signature.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.2.3
 Imports: 
     dplyr,
     future.apply,
     matrixStats,
     ggplot2,
-    utils
-URL: https://github.com/Lin2078/autochooseL
-BugReports: https://github.com/Lin2078/autochooseL/issues
+    reshape2
