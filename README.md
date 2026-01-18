@@ -1,6 +1,6 @@
 # autochooseL (v2.2.0) 🧪
 
-**L2078 Ultra: 高阶非线性生物标志物公式发现引擎**
+**autochooseL: 非线性生物标志物公式发现引擎**
 
 ## 🌟 设计目的
 
@@ -67,7 +67,7 @@ plot_L2078(results)
 
 如果你在 SCI 论文中使用了本工具，请按以下方式引用：
 
-> *Lin, 2078. autochooseL: An R package for automated nonlinear formula discovery in complex biological systems. v2.2.0. GitHub Repository.*
+> *Lin. autochooseL: An R package for automated nonlinear formula discovery in complex biological systems. v2.2.0. GitHub Repository.*
 
 ---
 
