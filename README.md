@@ -1,6 +1,6 @@
 # autochooseL (v2.2.0) 🧪
 
-**autochooseL: 非线性生物标志物公式发现引擎**
+**autochooseL: 非线性生物标志物公式探究**
 
 ## 🌟 设计目的
 
@@ -34,7 +34,7 @@ devtools::install_github("Lin2078/autochooseL", force = TRUE)
 
 ### 1. 自动化公式挖掘
 
-只需输入数据集和你的目标变量（结局），引擎将自动开始“炼金”：
+只需输入数据集和你的目标变量（结局），开始“炼金”：
 
 ```r
 library(autochooseL)
