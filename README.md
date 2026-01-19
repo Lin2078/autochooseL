@@ -54,7 +54,7 @@ print(head(results, 10))
 
 ### 2. 科研绘图
 
-一键生成符合 SCI 发表要求的公式排行榜图表：
+一键生成公式排行榜图表：
 
 ```r
 plot_L2078(results)
