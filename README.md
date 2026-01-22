@@ -1,18 +1,30 @@
 # AutochooseL 🧪
-Nonlinear Biomarker "Complex Formula" Analysis and Generation Engine
+
+**Nonlinear Biomarker "Complex Formula" Analysis and Generation Engine**
+
 ---
-# 🌟 Purpose
+
+## 🌟 Purpose
+
 In cross-sectional studies, automatically arranging different metrics into high-order nonlinear mathematical combinations allows for the exploration of "optimal formulas" that possess superior predictive power compared to single variables.
 
-# 🚀 Core Features
- * High-Order Discovery: Supports complex interaction modeling for 2 to 5 variables.
- * Nonlinear Operator Library: Features 12 built-in mathematical models simulating biological logic:
- * Sigmoid Response: Detects threshold and "switch" effects in disease onset.
- * Euclidean Distance: Measures the deviation of physiological indicators from a healthy equilibrium point (homeostasis).
- * Harmonic/Geometric Mean: Captures "bottleneck effects" and synergistic balance within biological systems.
 ---
-# 📦 Installation
-Ensure you have devtools installed, then run the following in R:
+
+## 🚀 Core Features
+
+* **High-Order Discovery**: Supports complex interaction modeling for **2 to 5 variables**.
+* **Nonlinear Operator Library**: Features built-in mathematical models simulating biological logic:
+    * **Sigmoid Response**: Detects threshold and "switch" effects in disease onset.
+    * **Euclidean Distance**: Measures the deviation of physiological indicators from a healthy equilibrium point (homeostasis).
+    * **Harmonic/Geometric Mean**: Captures "bottleneck effects" and synergistic balance within biological systems.
+
+---
+
+## 📦 Installation
+
+Ensure you have `devtools` installed, then run the following in R:
+
+```r
 # Install the latest stable version
 devtools::install_github("Lin2078/autochooseL", force = TRUE)
 
@@ -34,16 +46,17 @@ results <- discover_advanced_indices(
 print(head(results, 10))
 
 2. Visualization
-Generate a ranking chart of the discovered formulas with a single command:
+Generate a ranking chart with a single command:
 plot_L2078(results)
----
+
 📊 Formula Models Reference
 | Model Name | Mathematical Logic | Biological Interpretation |
 |---|---|---|
-| Sigmoid_Response | 1 / (1 + e^{-\sum Z}) | Trigger thresholds or saturation effects |
-| Euclidean_Dist | \sqrt{\sum Z^2} | Total displacement from multidimensional homeostasis |
-| Harmonic | n / \sum (1/x) | Rate-limiting steps or "Liebig's Law of the Minimum" |
-| log10_prod | \log_{10}(\prod x) | Exponential risk amplification in cascade reactions |
+| Sigmoid_Response | f(x) = \frac{1}{1 + e^{-\sum z}} | Trigger thresholds / switch effects |
+| Euclidean_Dist | d = \sqrt{\sum z^2} | Total deviation from homeostasis |
+| Harmonic_Mean | H = \frac{n}{\sum \frac{1}{x}} | Rate-limiting steps / Bottleneck effects |
+| Geometric_Mean | G = \sqrt[n]{\prod x} | Synergistic balance between pathways |
+| Log10_Prod | L = \log_{10}(\prod x + 1) | Exponential risk amplification |
 📖 Citation
 If you use this tool in your research, please cite it as follows:
 > Lin. autochooseL: An R package for automated nonlinear formula discovery in complex biological systems. GitHub Repository.
@@ -52,3 +65,4 @@ If you use this tool in your research, please cite it as follows:
 If you discover interesting mathematical models or encounter issues, please feel free to submit an Issue.
 Author: Lin2078
 Algorithm: L2078 Ultra Engine
+
