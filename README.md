@@ -10,16 +10,11 @@
 
 ## 🚀 核心特性
 
-* **High-Order Discovery**：支持 2～5 个变量的复杂交互建模。
-* **非线性算子库**：内置 12 种模拟生物逻辑的数学模型：
-* **Sigmoid Response**: 探测疾病爆发的阈值开关效应。
-* **Euclidean Distance**: 衡量生理指标对健康平衡点的偏离。
-* **Harmonic/Geometric Mean**: 捕捉系统中的“短板效应”与协同平衡。
 * **🧬 High-Order Discovery**：支持 2～5 个变量的高阶复杂交互建模，突破人工筛选极限。
 * **🧮 算子库 (Operators)**：内置 12 种模拟生物逻辑的数学模型：
-    Sigmoid Response: 捕捉疾病爆发的阈值开关效应。
-    Euclidean Distance: 量化生理指标对健康平衡点（Homeostasis）的偏离。
-    Harmonic/Geometric Mean: 捕捉系统中的“短板效应”与协同平衡。
+    * **Sigmoid Response**：捕捉疾病爆发的阈值开关效应。
+    * **Euclidean Distance**：量化生理指标对健康平衡点（Homeostasis）的偏离。
+    * **Harmonic/Geometric Mean**：捕捉系统中的“短板效应”与协同平衡。
 
 ---
 
