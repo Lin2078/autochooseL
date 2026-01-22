@@ -1,17 +1,17 @@
 # AutochooseL 🧪
 Nonlinear Biomarker "Complex Formula" Analysis and Generation Engine
 ---
-🌟 Purpose
+# 🌟 Purpose
 In cross-sectional studies, automatically arranging different metrics into high-order nonlinear mathematical combinations allows for the exploration of "optimal formulas" that possess superior predictive power compared to single variables.
 
-🚀 Core Features
+# 🚀 Core Features
  * High-Order Discovery: Supports complex interaction modeling for 2 to 5 variables.
  * Nonlinear Operator Library: Features 12 built-in mathematical models simulating biological logic:
  * Sigmoid Response: Detects threshold and "switch" effects in disease onset.
  * Euclidean Distance: Measures the deviation of physiological indicators from a healthy equilibrium point (homeostasis).
  * Harmonic/Geometric Mean: Captures "bottleneck effects" and synergistic balance within biological systems.
 ---
-📦 Installation
+# 📦 Installation
 Ensure you have devtools installed, then run the following in R:
 # Install the latest stable version
 devtools::install_github("Lin2078/autochooseL", force = TRUE)
